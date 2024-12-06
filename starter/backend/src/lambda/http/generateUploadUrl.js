@@ -4,7 +4,7 @@ import httpErrorHandler from '@middy/http-error-handler'
 import { getAttachmentUploadUrl } from '../../fileStorage/attachmentUtils.mjs'
 import { updateTodoUrl } from '../../businessLogic/todos.mjs'
 import { getUserId } from '../utils.mjs'
-import { createLogger } from '../utils/logger.mjs'
+import { createLogger } from '../../utils/logger.mjs'
 
 const logger = createLogger('http')
 
@@ -27,6 +27,9 @@ export const handler = middy()
     logger.info('End AttachmentUpload')
     return {
       statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      },
       body: JSON.stringify({
         uploadUrl: uploadUrl
       })

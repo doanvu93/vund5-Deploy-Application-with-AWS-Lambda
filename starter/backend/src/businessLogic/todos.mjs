@@ -11,11 +11,11 @@ export function getAllTodos(userId) {
 }
 
 export function updateTodo({ todoId, userId }, udpatedTodo) {
-  return todoAccess.updateTodo(todoId, userId, udpatedTodo)
+  return todoAccess.updateTodo({ todoId, userId }, udpatedTodo)
 }
 
 export function updateTodoUrl({ todoId, userId }, udpatedTodo) {
-  return todoAccess.updateTodoUrl(todoId, userId, udpatedTodo)
+  return todoAccess.updateTodoUrl({ todoId, userId }, udpatedTodo)
 }
 
 export function deleteTodo({ todoId, userId }) {

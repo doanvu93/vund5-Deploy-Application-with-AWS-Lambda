@@ -1,9 +1,8 @@
-org: vund5-prj4
-app: serverless-todo-app
 service: serverless-todo-app
 
 plugins:
   - serverless-iam-roles-per-function
+  - serverless-reqvalidator-plugin
 
 frameworkVersion: '4'
 

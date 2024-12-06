@@ -24,6 +24,9 @@ export const handler = middy()
     logger.info('End updateTodo')
     return {
       statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      },
       body: JSON.stringify({
         updatedTodo: result
       })

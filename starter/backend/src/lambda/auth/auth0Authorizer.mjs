@@ -47,7 +47,7 @@ async function verifyToken(authHeader) {
   if (!authHeader.toLowerCase().startsWith('bearer ')) throw new Error('Invalid authorization header');
   const token = getToken(authHeader)
   const jwt = jsonwebtoken.decode(token, { complete: true })
-
+  logger.info('Start verification');
   // TODO: Implement token verification
   try {
     const res = await Axios.get(jwksUrl);

@@ -1,7 +1,34 @@
-export function handler(event) {
-  const todoId = event.pathParameters.todoId
+import middy from '@middy/core'
+import cors from '@middy/http-cors'
+import httpErrorHandler from '@middy/http-error-handler'
+import { getAttachmentUploadUrl } from '../../fileStorage/attachmentUtils.mjs'
+import { updateTodoUrl } from '../../businessLogic/todos.mjs'
+import { getUserId } from '../utils.mjs'
+import { createLogger } from '../utils/logger.mjs'
 
-  // TODO: Return a presigned URL to upload a file for a TODO item with the provided id
-  return undefined
-}
+const logger = createLogger('http')
 
+export const handler = middy()
+  .use(httpErrorHandler())
+  .use(
+    cors({
+      credentials: true
+    })
+  )
+  .handler(async (event) => {
+    logger.info('Start AttachmentUpload')
+    const todoId = event.pathParameters.todoId
+    const userId = getUserId(event)
+    const { uploadUrl, imageUrl } = await getAttachmentUploadUrl(todoId)
+    await updateTodoUrl(
+      { todoId, userId },
+      { attachmentUrl: imageUrl }
+    )
+    logger.info('End AttachmentUpload')
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        uploadUrl: uploadUrl
+      })
+    }
+  })
